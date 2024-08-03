@@ -1,3 +1,5 @@
+package com.example.calculatrice;
+
 import java.util.Scanner;
 
 public class Main {
@@ -42,3 +44,4 @@ public class Main {
         System.out.println("The result is: " + result);
     }
 }
+
