@@ -1,1 +1,9 @@
-<p>calculator works!</p>
+<div class="container">
+  <h1>Calculator</h1>
+  <input type="number" [(ngModel)]="firstNumber" placeholder="First Number">
+  <input type="text" [(ngModel)]="operator" placeholder="Operator (+, -, *, /)">
+  <input type="number" [(ngModel)]="secondNumber" placeholder="Second Number">
+  <button (click)="calculate()">Calculate</button>
+  <div id="result">{{ result }}</div>
+</div>
+
