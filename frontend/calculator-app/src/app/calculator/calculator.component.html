@@ -1,9 +1,22 @@
-<div class="container">
-  <h1>Calculator</h1>
-  <input type="number" [(ngModel)]="firstNumber" placeholder="First Number">
-  <input type="text" [(ngModel)]="operator" placeholder="Operator (+, -, *, /)">
-  <input type="number" [(ngModel)]="secondNumber" placeholder="Second Number">
-  <button (click)="calculate()">Calculate</button>
-  <div id="result">{{ result }}</div>
+<div class="calculator">
+  <div class="display">{{ result }}</div>
+  <div class="buttons">
+    <button (click)="appendNumber('7')">7</button>
+    <button (click)="appendNumber('8')">8</button>
+    <button (click)="appendNumber('9')">9</button>
+    <button (click)="setOperation('+')">+</button>
+    <button (click)="appendNumber('4')">4</button>
+    <button (click)="appendNumber('5')">5</button>
+    <button (click)="appendNumber('6')">6</button>
+    <button (click)="setOperation('-')">-</button>
+    <button (click)="appendNumber('1')">1</button>
+    <button (click)="appendNumber('2')">2</button>
+    <button (click)="appendNumber('3')">3</button>
+    <button (click)="setOperation('*')">*</button>
+    <button (click)="appendNumber('0')">0</button>
+    <button (click)="appendDot()">.</button>
+    <button (click)="clear()">C</button>
+    <button (click)="setOperation('/')">/</button>
+    <button class="equal" (click)="calculate()">=</button>
+  </div>
 </div>
-
