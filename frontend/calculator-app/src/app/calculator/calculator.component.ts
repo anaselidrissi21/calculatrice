@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
 selector: 'app-calculator',
@@ -12,7 +13,9 @@ operator: string = '';
 result: string = '0';
 waitingForSecondNumber: boolean = false;
 
-appendNumber(number: string) {
+constructor(private http: HttpClient) {}
+
+  appendNumber(number: string) {
     if (this.waitingForSecondNumber) {
       this.secondNumber += number;
       this.result = this.secondNumber;
@@ -50,33 +53,47 @@ appendNumber(number: string) {
   }
 
   calculate() {
-    let computation: number;
-    const prev = parseFloat(this.firstNumber);
-    const current = parseFloat(this.secondNumber);
-    if (isNaN(prev) || isNaN(current)) return;
+    if (!this.firstNumber || !this.secondNumber || !this.operator) {
+      this.result = 'Error! Missing input';
+      return;
+    }
 
-    switch (this.operator) {
+    const num1 = parseFloat(this.firstNumber);
+    const num2 = parseFloat(this.secondNumber);
+    const operator = this.operator;
+    let url = `http://localhost:8080/api/`;
+
+    switch (operator) {
       case '+':
-        computation = prev + current;
+        url += `add?num1=${num1}&num2=${num2}`;
         break;
       case '-':
-        computation = prev - current;
+        url += `subtract?num1=${num1}&num2=${num2}`;
         break;
       case '*':
-        computation = prev * current;
+        url += `multiply?num1=${num1}&num2=${num2}`;
         break;
       case '/':
-        computation = prev / current;
+        url += `divide?num1=${num1}&num2=${num2}`;
         break;
       default:
+        this.result = 'Error! Invalid operator.';
         return;
     }
 
-    this.result = computation.toString();
-    this.firstNumber = this.result;
-    this.operator = '';
-    this.secondNumber = '';
-    this.waitingForSecondNumber = false;
+    this.http.get(url).subscribe(
+      (response: any) => {
+        this.result = response.toString();
+        this.firstNumber = this.result;
+        this.operator = '';
+        this.secondNumber = '';
+        this.waitingForSecondNumber = false;
+      },
+      (error) => {
+        this.result = 'Error! ' + error.message;
+      }
+    );
   }
 }
+
 
